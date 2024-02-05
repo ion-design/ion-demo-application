@@ -1,0 +1,306 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--primary-darkest: #302689;
+		--primary-darker: #3625ae;
+		--primary-dark: #432ad8;
+		--primary-base: #5b53ff;
+		--primary-light: #9ca7ff;
+		--primary-lighter: #dde3ff;
+		--primary-lightest: #ecf0ff;
+
+		--secondary-darkest: #394453;
+		--secondary-darker: #475569;
+		--secondary-dark: #516278;
+		--secondary-base: #667a91;
+		--secondary-light: #b0bbc9;
+		--secondary-lighter: #eceff2;
+		--secondary-lightest: #f6f7f9;
+
+		--danger-darkest: #991b1b;
+		--danger-darker: #b91c1c;
+		--danger-dark: #dc2626;
+		--danger-base: #ef4444;
+		--danger-light: #fca5a5;
+		--danger-lighter: #fee2e2;
+		--danger-lightest: #fef2f2;
+
+		--background: #f6f6f6;
+		--foreground: #3d3d3d;
+
+		--base: #f6f6f6;
+		--base-foreground: #1f2937;
+		--base-stroke: #1f2937;
+
+		--soft: #d1d1d1;
+		--soft-foreground: #6d6d6d;
+		--soft-stroke: #b0b0b0;
+
+		--weak: #e7e7e7;
+		--weak-foreground: #b0b0b0;
+		--weak-stroke: #d1d1d1;
+
+		--sub: #e7e7e7;
+		--sub-foreground: #4f4f4f;
+		--sub-stroke: #888888;
+
+		--surface: #454545;
+
+		--inverse: #181818;
+		--inverse-foreground: #f6f6f6;
+		--inverse-stroke: #f6f6f6;
+
+		--radius-none: 0px;
+		--radius-xs: 6px;
+		--radius-sm: 8px;
+		--radius-base: 10px;
+		--radius-md: 12px;
+		--radius-lg: 16px;
+		--radius-full: 999px;
+
+		--background-1000: #181818;
+		--background-900: #3d3d3d;
+		--background-800: #454545;
+		--background-700: #4f4f4f;
+		--background-600: #5d5d5d;
+		--background-500: #6d6d6d;
+		--background-400: #888888;
+		--background-300: #b0b0b0;
+		--background-200: #d1d1d1;
+		--background-100: #e7e7e7;
+		--background-0: #f6f6f6;
+
+		--primary-foreground: #ffffff;
+		--secondary-foreground: #ffffff;
+		--danger-foreground: #ffffff;
+
+		--state-success: #10b985;
+		--state-foreground: #f6f6f6;
+		--state-warning: #eaa108;
+		--state-error: #ef4444;
+		--state-information: #06acd4;
+		--state-away: #eaa108;
+		--state-feature: #aa55f7;
+		--state-neutral: #5d6c7d;
+		--state-verified: #5b53ff;
+
+		--shadow-low: 0px 1px 1px 0px rgba(0, 0, 0, 0.07), 0px 1px 2px 0px rgba(0, 0, 0, 0.08),
+			0px 2px 2px 0px rgba(0, 0, 0, 0.1), 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+		--shadow-medium: 0px 1px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px 0px rgba(0, 0, 0, 0.05),
+			0px 5px 5px 0px rgba(0, 0, 0, 0.05), 0px 10px 10px 0px rgba(0, 0, 0, 0.05),
+			0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+		--shadow-high: 0px 2px 4px 0px rgba(0, 0, 0, 0.03), 0px 6px 6px 0px rgba(0, 0, 0, 0.03),
+			0px 15px 20px 0px rgba(0, 0, 0, 0.03), 0px 30px 40px 0px rgba(0, 0, 0, 0.03),
+			0px 40px 70px 0px rgba(0, 0, 0, 0.03), 0px 4px 30px 0px rgba(0, 0, 0, 0.03),
+			0px 0px 8px 0px rgba(0, 0, 0, 0.03);
+	}
+	* {
+		@apply box-border;
+	}
+	.dark {
+		--primary-darkest: #ecf0ff;
+		--primary-darker: #dde3ff;
+		--primary-dark: #9ca7ff;
+		--primary-base: #5b53ff;
+		--primary-light: #432ad8;
+		--primary-lighter: #3625ae;
+		--primary-lightest: #302689;
+
+		--secondary-darkest: #f6f7f9;
+		--secondary-darker: #eceff2;
+		--secondary-dark: #b0bbc9;
+		--secondary-base: #667a91;
+		--secondary-light: #516278;
+		--secondary-lighter: #475569;
+		--secondary-lightest: #394453;
+
+		--danger-darkest: #fef2f2;
+		--danger-darker: #fee2e2;
+		--danger-dark: #fca5a5;
+		--danger-base: #ef4444;
+		--danger-light: #dc2626;
+		--danger-lighter: #b91c1c;
+		--danger-lightest: #991b1b;
+
+		--background-1000: #f6f6f6;
+		--background-900: #e7e7e7;
+		--background-800: #d1d1d1;
+		--background-700: #b0b0b0;
+		--background-600: #888888;
+		--background-500: #6d6d6d;
+		--background-400: #5d5d5d;
+		--background-300: #4f4f4f;
+		--background-200: #454545;
+		--background-100: #3d3d3d;
+		--background-0: #181818;
+
+		--background: #181818;
+		--foreground: #e7e7e7;
+
+		--base: #111827;
+		--base-foreground: #f9fafb;
+		--base-stroke: #f9fafb;
+
+		--soft: #454545;
+		--soft-foreground: #6d6d6d;
+		--soft-stroke: #4f4f4f;
+
+		--weak: #3d3d3d;
+		--weak-foreground: #4f4f4f;
+		--weak-stroke: #454545;
+
+		--sub: #3d3d3d;
+		--sub-foreground: #b0b0b0;
+		--sub-stroke: #5d5d5d;
+
+		--surface: #d1d1d1;
+
+		--inverse: #f6f6f6;
+		--inverse-foreground: #181818;
+		--inverse-stroke: #181818;
+
+		--radius-none: 0px;
+		--radius-xs: 6px;
+		--radius-sm: 8px;
+		--radius-base: 10px;
+		--radius-md: 12px;
+		--radius-lg: 16px;
+		--radius-full: 999px;
+		--primary-foreground: #ffffff;
+		--secondary-foreground: #000000;
+		--danger-foreground: #000000;
+		--state-success: #10b985;
+		--state-foreground: #181818;
+		--state-warning: #eaa108;
+		--state-error: #ef4444;
+		--state-information: #06acd4;
+		--state-away: #eaa108;
+		--state-feature: #aa55f7;
+		--state-neutral: #5d6c7d;
+		--state-verified: #5b53ff;
+
+		--shadow-low: 0px 1px 1px 0px rgba(256, 256, 256, 0.07),
+			0px 1px 2px 0px rgba(256, 256, 256, 0.08), 0px 2px 2px 0px rgba(256, 256, 256, 0.1),
+			0px 0px 8px 0px rgba(256, 256, 256, 0.05);
+		--shadow-medium: 0px 1px 1px 0px rgba(256, 256, 256, 0.05),
+			0px 2px 2px 0px rgba(256, 256, 256, 0.05), 0px 5px 5px 0px rgba(256, 256, 256, 0.05),
+			0px 10px 10px 0px rgba(256, 256, 256, 0.05), 0px 0px 8px 0px rgba(256, 256, 256, 0.05);
+		--shadow-high: 0px 2px 4px 0px rgba(256, 256, 256, 0.03),
+			0px 6px 6px 0px rgba(256, 256, 256, 0.03), 0px 15px 20px 0px rgba(256, 256, 256, 0.03),
+			0px 30px 40px 0px rgba(256, 256, 256, 0.03), 0px 40px 70px 0px rgba(256, 256, 256, 0.03),
+			0px 4px 30px 0px rgba(256, 256, 256, 0.03), 0px 0px 8px 0px rgba(256, 256, 256, 0.03);
+	}
+
+	.coffee {
+		--primary-darkest: #263f27;
+		--primary-darker: #2e4e2f;
+		--primary-dark: #3a613b;
+		--primary-base: #4e7c4d;
+		--primary-light: #afc8ad;
+		--primary-lighter: #e2ebe0;
+		--primary-lightest: #f2f7f2;
+
+		--secondary-darkest: #394453;
+		--secondary-darker: #475569;
+		--secondary-dark: #516278;
+		--secondary-base: #667a91;
+		--secondary-light: #b0bbc9;
+		--secondary-lighter: #eceff2;
+		--secondary-lightest: #f6f7f9;
+
+		--danger-darkest: #991b1b;
+		--danger-darker: #b91c1c;
+		--danger-dark: #dc2626;
+		--danger-base: #ef4444;
+		--danger-light: #fca5a5;
+		--danger-lighter: #fee2e2;
+		--danger-lightest: #fef2f2;
+
+		--background: #f9f5f1;
+		--foreground: #59312e;
+
+		--base: #ffffff;
+		--base-foreground: #1f2937;
+		--base-stroke: #1f2937;
+
+		--soft: #dbc3ac;
+		--soft-foreground: #b37659;
+		--soft-stroke: #c8a181;
+
+		--weak: #eee2d7;
+		--weak-foreground: #c8a181;
+		--weak-stroke: #dbc3ac;
+
+		--sub: #eee2d7;
+		--sub-foreground: #81453c;
+		--sub-stroke: #bb8864;
+
+		--surface: #6b3935;
+
+		--inverse: #231110;
+		--inverse-foreground: #f9f5f1;
+		--inverse-stroke: #f9f5f1;
+
+		--radius-none: 0px;
+		--radius-xs: 6px;
+		--radius-sm: 8px;
+		--radius-base: 10px;
+		--radius-md: 12px;
+		--radius-lg: 16px;
+		--radius-full: 999px;
+
+		--background-1000: #231110;
+		--background-900: #59312e;
+		--background-800: #6b3935;
+		--background-700: #81453c;
+		--background-600: #9a5945;
+		--background-500: #b37659;
+		--background-400: #bb8864;
+		--background-300: #c8a181;
+		--background-200: #dbc3ac;
+		--background-100: #eee2d7;
+		--background-0: #f9f5f1;
+
+		--primary-foreground: #ffffff;
+		--secondary-foreground: #ffffff;
+		--danger-foreground: #ffffff;
+
+		--state-success: #10b985;
+		--state-foreground: #f9f5f1;
+		--state-warning: #eaa108;
+		--state-error: #ef4444;
+		--state-information: #06acd4;
+		--state-away: #eaa108;
+		--state-feature: #aa55f7;
+		--state-neutral: #5d6c7d;
+		--state-verified: #3b76f6;
+
+		--shadow-low: 0px 1px 1px 0px rgba(0, 0, 0, 0.07), 0px 1px 2px 0px rgba(0, 0, 0, 0.08),
+			0px 2px 2px 0px rgba(0, 0, 0, 0.1), 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+		--shadow-medium: 0px 1px 1px 0px rgba(0, 0, 0, 0.05), 0px 2px 2px 0px rgba(0, 0, 0, 0.05),
+			0px 5px 5px 0px rgba(0, 0, 0, 0.05), 0px 10px 10px 0px rgba(0, 0, 0, 0.05),
+			0px 0px 8px 0px rgba(0, 0, 0, 0.05);
+		--shadow-high: 0px 2px 4px 0px rgba(0, 0, 0, 0.03), 0px 6px 6px 0px rgba(0, 0, 0, 0.03),
+			0px 15px 20px 0px rgba(0, 0, 0, 0.03), 0px 30px 40px 0px rgba(0, 0, 0, 0.03),
+			0px 40px 70px 0px rgba(0, 0, 0, 0.03), 0px 4px 30px 0px rgba(0, 0, 0, 0.03),
+			0px 0px 8px 0px rgba(0, 0, 0, 0.03);
+	}
+}
+
+@layer components {
+	.primary-focus {
+		outline: none;
+		box-shadow: 0px 0px 0px 4px var(--primary-lighter), 0px 0px 0px 2px var(--background);
+	}
+	.secondary-focus {
+		outline: none;
+		box-shadow: 0px 0px 0px 4px var(--secondary-lighter), 0px 0px 0px 2px var(--background);
+	}
+	.danger-focus {
+		outline: none;
+		box-shadow: 0px 0px 0px 4px var(--danger-lighter), 0px 0px 0px 2px var(--background);
+	}
+}

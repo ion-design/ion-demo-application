@@ -153,7 +153,7 @@ function SideNavigation() {
 							subtitle="Product Designer"
 							title="Samraaj"
 							size="md"
-							src="https://i.ibb.co/jrmkxZZ/placeholder-Person.png"
+							src="/images/profile-card/headshot-1.png"
 						/>
 					}
 					collapsed={false}

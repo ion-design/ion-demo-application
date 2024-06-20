@@ -6,7 +6,7 @@ import { ChevronsUpDown } from 'lucide-react';
 import Avatar from '@/components/ui/Avatar';
 import Badge from '@/components/ui/Badge';
 import { MouseEvent, useState } from 'react';
-import { CreditCard, MagnifyingGlass, CurrencyDollar } from '@phosphor-icons/react';
+import { CreditCard, MagnifyingGlass, CurrencyDollar, ChartLine } from '@phosphor-icons/react';
 import Tag from '@/components/ui/Tag';
 import Switch from '@/components/ui/Switch';
 import SideNavigation from '@/components/ion/SideNavigation';
@@ -22,6 +22,10 @@ function EmployeesPage() {
 
 	function hireClickHandler(e: MouseEvent<HTMLButtonElement>) {
 		router.push('/hire');
+	}
+
+	function metricsClickHandler(e: MouseEvent<HTMLButtonElement>) {
+		router.push('/employees/metrics');
 	}
 
 	function salaryClickHandler(e: MouseEvent<HTMLButtonElement>) {
@@ -71,7 +75,7 @@ function EmployeesPage() {
 				<div className="w-full flex items-center gap-x-5">
 					<div className="flex-col flex items-start gap-y-1">
 						<div className="text-xl font-semibold text-base-foreground">Employees</div>
-						<div className="text-sm text-gray-600">Manage your preferences and options</div>
+						<div className="text-sm text-sub-foreground">Manage your preferences and options</div>
 					</div>
 				</div>
 				<Divider />
@@ -85,17 +89,26 @@ function EmployeesPage() {
 							value={inputValue}
 							onChange={(e) => setInputValue(e.target.value)}
 						/>
-						<Button
-							iconLeading={
-								<CurrencyDollar size={16} className="text-primary-foreground" weight={'bold'} />
-							}
-							emphasis="high"
-							color="primary"
-							size="md"
-							onClick={hireClickHandler}
-						>
-							Hire
-						</Button>
+						<div className="flex gap-5">
+							<Button
+								iconLeading={<ChartLine size={16} weight={'bold'} />}
+								emphasis="high"
+								color="secondary"
+								size="md"
+								onClick={metricsClickHandler}
+							>
+								Metrics
+							</Button>
+							<Button
+								iconLeading={<CurrencyDollar size={16} weight={'bold'} />}
+								emphasis="high"
+								color="primary"
+								size="md"
+								onClick={hireClickHandler}
+							>
+								Hire
+							</Button>
+						</div>
 					</div>
 					<Table
 						columns={[

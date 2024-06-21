@@ -64,36 +64,7 @@ function DashboardExample() {
             </Button>
           </div>
         </div>
-        <div className="w-full flex items-start gap-5">
-          <TokenMetric
-            badge={
-              <Badge
-                iconLeading={<ArrowUp size={12} weight={"bold"} />}
-                emphasis="medium"
-                color="green"
-                size="md"
-              >
-                8.23%
-              </Badge>
-            }
-            metric="$1.35b"
-            title="Volume 24H"
-          />
-          <TokenMetric
-            badge={
-              <Badge
-                iconLeading={<ArrowDown size={12} weight={"bold"} />}
-                emphasis="medium"
-                color="red"
-                size="md"
-              >
-                4.28%
-              </Badge>
-            }
-            metric="$4.56"
-            title="TVL"
-          />
-        </div>
+
         <div className="w-full flex flex-col gap-2">
           <div className="text-lg font-semibold text-base-foreground">
             Overview
@@ -157,6 +128,36 @@ function DashboardExample() {
               yAxisWidth={48}
             />
           </div>
+        </div>
+<div className="w-full flex items-start gap-5">
+          <TokenMetric
+            badge={
+              <Badge
+                iconLeading={<ArrowUp size={12} weight={"bold"} />}
+                emphasis="medium"
+                color="green"
+                size="md"
+              >
+                8.23%
+              </Badge>
+            }
+            metric="$1.35b"
+            title="Volume 24H"
+          />
+          <TokenMetric
+            badge={
+              <Badge
+                iconLeading={<ArrowDown size={12} weight={"bold"} />}
+                emphasis="medium"
+                color="red"
+                size="md"
+              >
+                4.28%
+              </Badge>
+            }
+            metric="$4.56"
+            title="TVL"
+          />
         </div>
       </div>
     </div>

@@ -13,7 +13,10 @@ const AvatarImage = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<AvatarPrimitive.Image
 		ref={ref}
-		className={clsx('aspect-square h-full w-full rounded-full object-cover', className)}
+		className={clsx(
+			'transition-transform duration-300 ease-in-out transform rounded-full object-cover',
+			className
+		)}
 		{...props}
 	/>
 ));
@@ -28,13 +31,16 @@ const AvatarFallback = React.forwardRef<
 >(({ className, initials, size, ...props }, ref) => (
 	<AvatarPrimitive.Fallback
 		ref={ref}
-		className={clsx('flex items-center justify-center rounded-full', className)}
+		className={clsx(
+			'flex items-center justify-center rounded-full transition-opacity duration-500 ease-in-out',
+			className
+		)}
 		{...props}
 	>
 		{initials ? (
 			<span
 				className={clsx({
-					'text-foreground': true,
+					'text-foreground transition-all duration-300 ease-in-out': true,
 					'text-lg': size === 'lg',
 					'text-base': size === 'md',
 					'text-xs': size === 'sm',
@@ -45,7 +51,7 @@ const AvatarFallback = React.forwardRef<
 		) : (
 			<User
 				className={clsx({
-					'stroke-2 text-sub-foreground': true,
+					'stroke-2 text-sub-foreground transition-transform duration-300 ease-in-out': true,
 					'h-8 w-8': size === 'lg',
 					'h-7 w-7': size === 'md',
 					'h-4 w-4': size === 'sm',
@@ -57,7 +63,7 @@ const AvatarFallback = React.forwardRef<
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
 const avatarStatusClassNames = cva(
-	['absolute box-content flex flex-row items-center justify-center rounded-full border-base'],
+	['absolute box-content flex flex-row items-center justify-center rounded-full border-base transition-colors duration-300 ease-in-out'],
 	{
 		variants: {
 			location: {
@@ -93,7 +99,7 @@ const AvatarStatus = React.forwardRef<
 	}
 >(({ className, type, location, size, ...props }, ref) => {
 	const iconClassNames = clsx({
-		'stroke-base stroke-2': true,
+		'stroke-base stroke-2 transition-transform duration-300 ease-in-out': true,
 		'h-2 w-2': size === 'lg' || size === 'md',
 		'h-1.5 w-1.5': size === 'sm',
 	});
@@ -132,7 +138,7 @@ const AvatarLabel = React.forwardRef<
 			ref={ref}
 			className={clsx(
 				{
-					'flex flex-col justify-center': true,
+					'flex flex-col justify-center transition-opacity duration-500 ease-in-out': true,
 					'gap-y-1': size === 'lg',
 					'gap-y-0.5': size === 'md',
 					'gap-y-0': size === 'sm',
@@ -143,23 +149,28 @@ const AvatarLabel = React.forwardRef<
 		>
 			{title && (
 				<h3
-					className={clsx('font-semibold text-foreground', {
-						'text-lg': size === 'lg',
-						'text-base': size === 'md',
-						'text-sm': size === 'sm',
-					})}
+					className={clsx(
+						'font-semibold text-foreground transition-transform duration-300 ease-in-out',
+						{
+							'text-lg': size === 'lg',
+							'text-base': size === 'md',
+							'text-sm': size === 'sm',
+						}
+					)}
 				>
 					{title}
 				</h3>
 			)}
 			{subtitle && (
 				<p
-					className={clsx({
-						'text-sub-foreground': true,
-						'text-base': size === 'lg',
-						'text-sm': size === 'md',
-						'text-xs': size === 'sm',
-					})}
+					className={clsx(
+						'text-sub-foreground transition-opacity duration-300 ease-in-out',
+						{
+							'text-base': size === 'lg',
+							'text-sm': size === 'md',
+							'text-xs': size === 'sm',
+						}
+					)}
 				>
 					{subtitle}
 				</p>
@@ -193,7 +204,7 @@ const Avatar = React.forwardRef<
 	) => (
 		<div
 			className={clsx({
-				'flex flex-row items-center': true,
+				'flex flex-row items-center transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg': true,
 				'gap-x-3': size === 'lg' || size === 'md',
 				'gap-x-2': size === 'sm',
 			})}
@@ -202,7 +213,7 @@ const Avatar = React.forwardRef<
 				ref={ref}
 				className={clsx(
 					{
-						'relative flex shrink-0 flex-col items-center justify-center rounded-full border border-sub-stroke bg-soft': true,
+						'relative flex shrink-0 flex-col items-center justify-center rounded-full border border-sub-stroke bg-soft transition-shadow duration-300 ease-in-out hover:shadow-xl': true,
 						'h-[60px] w-[60px]': size === 'lg',
 						'h-12 w-12': size === 'md',
 						'h-7 w-7': size === 'sm',

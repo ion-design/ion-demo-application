@@ -1,8 +1,7 @@
 'use client';
 // ion/TableContainer: Generated with Ion on 2/5/2024, 12:14:35 AM
 import * as React from 'react';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import {
 	ColumnDef,
 	SortingState,
@@ -15,18 +14,23 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from '@tanstack/react-table';
-
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
 const TableRoot = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
 	({ className, ...props }, ref) => (
-		<div className="relative w-full overflow-auto">
+		<motion.div
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5, ease: 'easeOut' }}
+			className="relative w-full overflow-auto"
+		>
 			<table
 				ref={ref}
 				className={clsx('w-full caption-bottom overflow-hidden rounded-radius bg-base', className)}
 				{...props}
 			/>
-		</div>
+		</motion.div>
 	)
 );
 TableRoot.displayName = 'Table';
@@ -35,14 +39,34 @@ const TableHeader = React.forwardRef<
 	HTMLTableSectionElement,
 	React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-	<thead ref={ref} className={clsx('bg-weak [&>tr]:border-b-0', className)} {...props} />
+	<thead
+		ref={ref}
+		className={clsx('bg-weak [&>tr]:border-b-0', className)}
+		{...props}
+	/>
 ));
 TableHeader.displayName = 'TableHeader';
 
 const TableBody = React.forwardRef<
 	HTMLTableSectionElement,
 	React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => <tbody ref={ref} className={clsx('', className)} {...props} />);
+>(({ className, ...props }, ref) => (
+	<motion.tbody
+		ref={ref}
+		className={clsx('', className)}
+		initial="hidden"
+		animate="visible"
+		variants={{
+			visible: {
+				transition: {
+					staggerChildren: 0.05,
+				},
+			},
+			hidden: {},
+		}}
+		{...props}
+	/>
+));
 TableBody.displayName = 'TableBody';
 
 const TableFooter = React.forwardRef<
@@ -59,12 +83,15 @@ TableFooter.displayName = 'TableFooter';
 
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
 	({ className, ...props }, ref) => (
-		<tr
+		<motion.tr
 			ref={ref}
 			className={clsx(
-				'border-b transition-colors last:border-b-0 hover:bg-weak data-[state=selected]:bg-weak',
+				'border-b last:border-b-0 hover:bg-weak data-[state=selected]:bg-weak',
 				className
 			)}
+			whileHover={{ scale: 1.02, backgroundColor: 'rgba(245, 245, 245, 1)' }}
+			animate={{ backgroundColor: props['data-state'] === 'selected' ? 'rgba(245, 245, 245, 1)' : '#fff' }}
+			transition={{ duration: 0.3 }}
 			{...props}
 		/>
 	)
@@ -78,7 +105,7 @@ const TableHead = React.forwardRef<
 	<th
 		ref={ref}
 		className={clsx(
-			'px-5 py-3 text-left align-middle text-sm font-normal text-sub-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+			'px-5 py-3 text-left align-middle text-sm font-normal text-sub-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] transition-colors duration-300',
 			className
 		)}
 		{...props}
@@ -90,12 +117,16 @@ const TableCell = React.forwardRef<
 	HTMLTableCellElement,
 	React.TdHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
-	<td
+	<motion.td
 		ref={ref}
 		className={clsx(
 			'px-5 py-3 align-middle text-sm [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
 			className
 		)}
+		initial={{ opacity: 0, y: 10 }}
+		animate={{ opacity: 1, y: 0 }}
+		exit={{ opacity: 0, y: -10 }}
+		transition={{ duration: 0.3 }}
 		{...props}
 	/>
 ));
@@ -105,7 +136,11 @@ const TableCaption = React.forwardRef<
 	HTMLTableCaptionElement,
 	React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-	<caption ref={ref} className={clsx('text-description mt-4 text-sm', className)} {...props} />
+	<caption
+		ref={ref}
+		className={clsx('text-description mt-4 text-sm', className)}
+		{...props}
+	/>
 ));
 TableCaption.displayName = 'TableCaption';
 
@@ -145,7 +180,12 @@ export default function Table<TData, TValue>({
 	});
 
 	return (
-		<div className={clsx('w-full space-y-4', className)}>
+		<motion.div
+			className={clsx('w-full space-y-4', className)}
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			transition={{ duration: 0.5, ease: 'easeOut' }}
+		>
 			<div>
 				<TableRoot className="w-full">
 					{columns.some((column) => !!column.header) && (
@@ -168,7 +208,7 @@ export default function Table<TData, TValue>({
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+								<TableRow key={row.id} data-state={row.getIsSelected() ? 'selected' : undefined}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
 											{flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -192,7 +232,7 @@ export default function Table<TData, TValue>({
 					)}
 				</TableRoot>
 			</div>
-		</div>
+		</motion.div>
 	);
 }
 Table.displayName = 'Table';

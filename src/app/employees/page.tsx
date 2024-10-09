@@ -1,6 +1,7 @@
 'use client';
 // Generated with Ion on 2/5/2024, 12:14:34 AM
-// Figma Link: https://www.figma.com/file/LncZWxVTpD4svqEUVk63pC?node-id=27:7062
+// Figma Link: https://www.figma.com/file/LncZWxVTpD4svqEUVk63pD?node-id=27:7062
+import { motion } from 'framer-motion';
 import Checkbox from '@/components/ui/Checkbox';
 import { ChevronsUpDown } from 'lucide-react';
 import Avatar from '@/components/ui/Avatar';
@@ -68,19 +69,54 @@ function EmployeesPage() {
 		},
 	];
 
+	// Animation variants
+	const containerVariants = {
+		hidden: { opacity: 0 },
+		visible: {
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.2,
+			},
+		},
+	};
+
+	const itemVariants = {
+		hidden: { opacity: 0, y: 20 },
+		visible: { opacity: 1, y: 0 },
+	};
+
 	return (
 		<div className="bg-base w-screen h-screen flex items-start">
 			<SideNavigation />
-			<div className="h-full flex-1 flex-col flex items-center gap-y-5 p-5 overflow-y-scroll">
-				<div className="w-full flex items-center gap-x-5">
-					<div className="flex-col flex items-start gap-y-1">
-						<div className="text-xl font-semibold text-base-foreground">Employees</div>
-						<div className="text-sm text-sub-foreground">Manage your preferences and options</div>
-					</div>
-				</div>
-				<Divider />
-				<div className="w-full flex-col max-w-[1200px] flex items-start gap-y-5">
-					<div className="w-full flex justify-between items-start">
+			<motion.div
+				className="h-full flex-1 flex flex-col items-center gap-y-5 p-5 overflow-y-scroll"
+				initial="hidden"
+				animate="visible"
+				variants={containerVariants}
+			>
+				<motion.div className="w-full flex items-center gap-x-5" variants={itemVariants}>
+					<motion.div className="flex-col flex items-start gap-y-1" variants={itemVariants}>
+						<motion.div
+							className="text-xl font-semibold text-base-foreground"
+							variants={itemVariants}
+							transition={{ duration: 0.5 }}
+						>
+							Employees
+						</motion.div>
+						<motion.div
+							className="text-sm text-sub-foreground"
+							variants={itemVariants}
+							transition={{ duration: 0.5, delay: 0.1 }}
+						>
+							Manage your preferences and options
+						</motion.div>
+					</motion.div>
+				</motion.div>
+				<motion.div variants={itemVariants} initial="hidden" animate="visible" transition={{ duration: 0.5, delay: 0.2 }}>
+					<Divider />
+				</motion.div>
+				<motion.div className="w-full flex-col max-w-[1200px] flex items-start gap-y-5" variants={containerVariants}>
+					<motion.div className="w-full flex justify-between items-start" variants={itemVariants}>
 						<Input
 							placeholder="Search People"
 							iconLeading={
@@ -109,97 +145,102 @@ function EmployeesPage() {
 								Hire
 							</Button>
 						</div>
-					</div>
-					<Table
-						columns={[
-							{
-								id: 'none',
-								header: ({ table: table }) => (
-									<Checkbox
-										checked={
-											table.getIsAllPageRowsSelected() ||
-											(table.getIsSomePageRowsSelected() && 'indeterminate')
-										}
-										onCheckedChange={(value) => {
-											if (table.getIsSomePageRowsSelected()) {
-												table.toggleAllPageRowsSelected(false);
-											} else {
-												table.toggleAllPageRowsSelected(!!value);
+					</motion.div>
+					<motion.div variants={itemVariants} initial="hidden" animate="visible" transition={{ duration: 0.5, delay: 0.3 }}>
+						<Table
+							columns={[
+								{
+									id: 'none',
+									header: ({ table: table }) => (
+										<Checkbox
+											checked={
+												table.getIsAllPageRowsSelected() ||
+												(table.getIsSomePageRowsSelected() && 'indeterminate')
 											}
-										}}
-										aria-label="Select all"
-									/>
-								),
-								cell: ({ row: row }) => (
-									<Checkbox
-										checked={row.getIsSelected()}
-										onCheckedChange={(value) => row.toggleSelected(!!value)}
-										aria-label="Select row"
-									/>
-								),
-							},
-							{
-								header: ({ column: column }) => (
-									<button
-										className="flex flex-row items-center gap-x-3 text-sm font-normal"
-										onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-									>
-										<h4>Employee Name</h4>
-										<ChevronsUpDown size={16} className="stroke-sub-foreground"></ChevronsUpDown>
-									</button>
-								),
-								accessorKey: 'employeeName',
-								cell: ({ row: { original: cellData } }) => (
-									<div className="flex flex-row gap-x-3">
-										<Avatar size="md" src={cellData.employeeName.imgSrc} />
-										<div className="flex-col flex justify-center items-start gap-y-1 text-sm">
-											<div className="text-foreground">{cellData.employeeName.name}</div>
-											<div className="text-sub-foreground">{cellData.employeeName.email}</div>
+											onCheckedChange={(value) => {
+												if (table.getIsSomePageRowsSelected()) {
+													table.toggleAllPageRowsSelected(false);
+												} else {
+													table.toggleAllPageRowsSelected(!!value);
+												}
+											}}
+											aria-label="Select all"
+										/>
+									),
+									cell: ({ row: row }) => (
+										<Checkbox
+											checked={row.getIsSelected()}
+											onCheckedChange={(value) => row.toggleSelected(!!value)}
+											aria-label="Select row"
+										/>
+									),
+								},
+								{
+									header: ({ column: column }) => (
+										<motion.button
+											className="flex flex-row items-center gap-x-3 text-sm font-normal"
+											onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+											whileHover={{ scale: 1.05 }}
+											whileTap={{ scale: 0.95 }}
+											transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+										>
+											<h4>Employee Name</h4>
+											<ChevronsUpDown size={16} className="stroke-sub-foreground"></ChevronsUpDown>
+										</motion.button>
+									),
+									accessorKey: 'employeeName',
+									cell: ({ row: { original: cellData } }) => (
+										<div className="flex flex-row gap-x-3">
+											<Avatar size="md" src={cellData.employeeName.imgSrc} />
+											<div className="flex-col flex justify-center items-start gap-y-1 text-sm">
+												<div className="text-foreground">{cellData.employeeName.name}</div>
+												<div className="text-sub-foreground">{cellData.employeeName.email}</div>
+											</div>
 										</div>
-									</div>
-								),
-							},
-							{
-								header: 'Title',
-								cell: ({ row: { original: cellData } }) => <>{cellData.title}</>,
-							},
-							{
-								header: 'Department',
-								cell: ({ row: { original: cellData } }) => (
-									<Badge
-										emphasis="medium"
-										color={cellData.department == 'Engineering' ? 'blue' : 'green'}
-										size="md"
-									>
-										{cellData.department}
-									</Badge>
-								),
-							},
-							{
-								header: 'Type',
-								cell: ({ row: { original: cellData } }) => (
-									<Tag
-										iconLeading={
-											<CreditCard size={12} className="text-foreground" weight={'regular'} />
-										}
-										type="stroke"
-										color="simple"
-										onClick={salaryClickHandler}
-									>
-										{cellData.type}
-									</Tag>
-								),
-							},
-							{
-								header: 'Remote',
-								cell: ({ row: { original: cellData } }) => <Switch size="sm" />,
-							},
-						]}
-						data={data}
-						className="w-full"
-					/>
-				</div>
-			</div>
+									),
+								},
+								{
+									header: 'Title',
+									cell: ({ row: { original: cellData } }) => <>{cellData.title}</>,
+								},
+								{
+									header: 'Department',
+									cell: ({ row: { original: cellData } }) => (
+										<Badge
+											emphasis="medium"
+											color={cellData.department == 'Engineering' ? 'blue' : 'green'}
+											size="md"
+										>
+											{cellData.department}
+										</Badge>
+									),
+								},
+								{
+									header: 'Type',
+									cell: ({ row: { original: cellData } }) => (
+										<Tag
+											iconLeading={
+												<CreditCard size={12} className="text-foreground" weight={'regular'} />
+											}
+											type="stroke"
+											color="simple"
+											onClick={salaryClickHandler}
+										>
+											{cellData.type}
+										</Tag>
+									),
+								},
+								{
+									header: 'Remote',
+									cell: ({ row: { original: cellData } }) => <Switch size="sm" />,
+								},
+							]}
+							data={data}
+							className="w-full"
+						/>
+					</motion.div>
+				</motion.div>
+			</motion.div>
 		</div>
 	);
 }

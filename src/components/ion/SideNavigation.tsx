@@ -34,7 +34,7 @@ function SideNavigation() {
       <div className="bg-white flex-1 h-full w-[244px] flex flex-col justify-between">
         <NavigationMenu>
           <NavigationMenuList className="w-full flex flex-col gap-1">
-            <div className="text-base font-semibold text-gray-600 px-3 pt-4">
+            <div className="text-base font-semibold text-gray-600 px-3 pt-4 transition-opacity duration-500 ease-in-out opacity-0 animate-fadeIn">
               Main
             </div>
             {[
@@ -60,7 +60,11 @@ function SideNavigation() {
                 iconLeading: <Handshake size={16} weight={"fill"} />,
               },
             ].map(({ children, extra, iconLeading }, index) => (
-              <NavigationMenuItem className={"px-3"} key={index}>
+              <NavigationMenuItem
+                className="px-3 transition-opacity duration-700 ease-in-out opacity-0 animate-fadeInUp"
+                key={index}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
                 <NavigationMenuLink
                   className="w-full"
                   extra={extra}
@@ -71,10 +75,12 @@ function SideNavigation() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
-            <div className="text-base font-semibold text-gray-600 px-3 pt-4">
+            <div className="text-base font-semibold text-gray-600 px-3 pt-4 transition-opacity duration-500 ease-in-out opacity-0 animate-fadeIn">
               Utility
             </div>
-            <NavigationMenuItem className={"px-3"}>
+            <NavigationMenuItem
+              className="px-3 transition-transform duration-300 ease-in-out hover:translate-x-1"
+            >
               <NavigationMenuLink
                 iconTrailing={<CaretRight size={16} weight={"bold"} />}
                 iconLeading={<Gear size={16} weight={"fill"} />}
@@ -83,7 +89,9 @@ function SideNavigation() {
                 Settings
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem className={"px-3"}>
+            <NavigationMenuItem
+              className="px-3 transition-transform duration-300 ease-in-out hover:translate-x-1"
+            >
               <NavigationMenuLink
                 iconTrailing={<CaretRight size={16} weight={"bold"} />}
                 iconLeading={<User size={16} weight={"fill"} />}
@@ -101,7 +109,7 @@ function SideNavigation() {
               color="secondary"
               size="sm"
               onClick={contactClickHandler}
-              className="w-full"
+              className="w-full transition-transform duration-300 ease-in-out hover:scale-105 focus:scale-105"
             >
               Contact
             </Button>
@@ -116,11 +124,12 @@ function SideNavigation() {
               />
             }
             collapsed={false}
-            className="w-full"
+            className="w-full transition-opacity duration-500 ease-in-out opacity-0 animate-fadeInUp"
           />
         </div>
       </div>
     </Sidebar>
   );
 }
+
 export default SideNavigation;

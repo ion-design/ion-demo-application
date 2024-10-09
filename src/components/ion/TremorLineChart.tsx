@@ -1,6 +1,8 @@
 // Generated with Ion on 2/19/2024, 9:26:40 AM
 // Figma Link: https://www.figma.com/file/LncZWxVTpD4svqEUVk63pC?node-id=3149:187
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
+
 type TremorLineChartProps = {
   xAxisType?: "number" | "date";
   yAxisType?: "money" | "number";
@@ -14,6 +16,12 @@ function TremorLineChart({
   count = "1",
   className = "",
 }: TremorLineChartProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const xAxisTypeTexts: Record<
     NonNullable<TremorLineChartProps["xAxisType"]>,
     string
@@ -133,36 +141,52 @@ function TremorLineChart({
     date: "Dec 22",
     number: "12",
   };
+
   return (
     <div
       className={clsx(
         "w-[829px] flex-col flex items-center gap-4 p-6 rounded-radius-xs h-fit",
-        className
+        className,
+        isMounted
+          ? "opacity-100 translate-y-0 transition-opacity duration-1000 ease-out transition-transform duration-1000 ease-out"
+          : "opacity-0 translate-y-4"
       )}
     >
       <div
-        className={clsx({
-          "flex items-start gap-3 text-sm font-semibold": true,
-          "text-foreground": count === "5",
-        })}
+        className={clsx(
+          "flex items-start gap-3 text-sm font-semibold transition-opacity duration-500 ease-out",
+          {
+            "text-foreground": count === "5",
+            "opacity-100": isMounted,
+            "opacity-0": !isMounted,
+          }
+        )}
       >
         <div
-          className={clsx({
-            "flex items-center gap-1.5": true,
-            "text-foreground":
-              count === "1" || count === "2" || count === "3" || count === "4",
-          })}
+          className={clsx(
+            "flex items-center gap-1.5 transition-opacity duration-500 ease-out",
+            {
+              "text-foreground":
+                count === "1" || count === "2" || count === "3" || count === "4",
+              "opacity-100": isMounted,
+              "opacity-0": !isMounted,
+            }
+          )}
         >
           <img src="imgsrc|I3149:190;3149:9|Dot" alt="Dot" className="h-2" />
           <div>Category 1</div>
         </div>
         {(count === "2" || count === "3" || count === "4" || count === "5") && (
           <div
-            className={clsx({
-              "flex items-center gap-1.5": true,
-              "text-foreground":
-                count === "2" || count === "3" || count === "4",
-            })}
+            className={clsx(
+              "flex items-center gap-1.5 transition-opacity duration-500 ease-out",
+              {
+                "text-foreground":
+                  count === "2" || count === "3" || count === "4",
+                "opacity-100": isMounted,
+                "opacity-0": !isMounted,
+              }
+            )}
           >
             <img src="imgsrc|I3149:227;3149:28|Dot" alt="Dot" className="h-2" />
             <div>Category 2</div>
@@ -170,10 +194,14 @@ function TremorLineChart({
         )}
         {(count === "3" || count === "4" || count === "5") && (
           <div
-            className={clsx({
-              "flex items-center gap-1.5": true,
-              "text-foreground": count === "3" || count === "4",
-            })}
+            className={clsx(
+              "flex items-center gap-1.5 transition-opacity duration-500 ease-out",
+              {
+                "text-foreground": count === "3" || count === "4",
+                "opacity-100": isMounted,
+                "opacity-0": !isMounted,
+              }
+            )}
           >
             <img src="imgsrc|I3149:264;3149:47|Dot" alt="Dot" className="h-2" />
             <div>Category 3</div>
@@ -181,17 +209,29 @@ function TremorLineChart({
         )}
         {(count === "4" || count === "5") && (
           <div
-            className={clsx({
-              "flex items-center gap-1.5": true,
-              "text-foreground": count === "4",
-            })}
+            className={clsx(
+              "flex items-center gap-1.5 transition-opacity duration-500 ease-out",
+              {
+                "text-foreground": count === "4",
+                "opacity-100": isMounted,
+                "opacity-0": !isMounted,
+              }
+            )}
           >
             <img src="imgsrc|I3149:301;3149:66|Dot" alt="Dot" className="h-2" />
             <div>Category 4</div>
           </div>
         )}
         {count === "5" && (
-          <div className="flex items-center gap-1.5">
+          <div
+            className={clsx(
+              "flex items-center gap-1.5 transition-opacity duration-500 ease-out",
+              {
+                "opacity-100": isMounted,
+                "opacity-0": !isMounted,
+              }
+            )}
+          >
             <img src="imgsrc|I3149:338;3149:85|Dot" alt="Dot" className="h-2" />
             <div>Category 5</div>
           </div>
@@ -200,51 +240,109 @@ function TremorLineChart({
       <div className="w-[781px] h-[280px] flex-col flex gap-1">
         <div className="w-full flex-1 flex gap-2">
           <div className="h-full flex-col flex justify-between items-end gap-3.5 pb-6 text-xs leading-4 text-right text-sub-foreground">
-            <div>{xAxisTypeTexts[xAxisType]}</div>
-            <div>{xAxisTypeTexts_1[xAxisType]}</div>
-            <div>{xAxisTypeTexts_2[xAxisType]}</div>
-            <div>{xAxisTypeTexts_3[xAxisType]}</div>
-            <div>{xAxisTypeTexts_4[xAxisType]}</div>
+            <div
+              className={clsx(
+                "transition-opacity duration-700 ease-out",
+                { "opacity-100": isMounted, "opacity-0": !isMounted }
+              )}
+            >
+              {xAxisTypeTexts[xAxisType]}
+            </div>
+            <div
+              className={clsx(
+                "transition-opacity duration-700 ease-out",
+                { "opacity-100": isMounted, "opacity-0": !isMounted }
+              )}
+            >
+              {xAxisTypeTexts_1[xAxisType]}
+            </div>
+            <div
+              className={clsx(
+                "transition-opacity duration-700 ease-out",
+                { "opacity-100": isMounted, "opacity-0": !isMounted }
+              )}
+            >
+              {xAxisTypeTexts_2[xAxisType]}
+            </div>
+            <div
+              className={clsx(
+                "transition-opacity duration-700 ease-out",
+                { "opacity-100": isMounted, "opacity-0": !isMounted }
+              )}
+            >
+              {xAxisTypeTexts_3[xAxisType]}
+            </div>
+            <div
+              className={clsx(
+                "transition-opacity duration-700 ease-out",
+                { "opacity-100": isMounted, "opacity-0": !isMounted }
+              )}
+            >
+              {xAxisTypeTexts_4[xAxisType]}
+            </div>
           </div>
           <div className="relative h-full flex-1 flex-col flex gap-2">
             <div className="w-full flex-1 flex-col flex justify-between gap-[59px] py-1.5">
               <img
                 src="imgsrc|3149:201|Grid lines"
                 alt="Grid lines"
-                className="w-full"
+                className={clsx(
+                  "w-full transition-opacity duration-1000 ease-out",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
               />
               <img
                 src="imgsrc|3149:201|Grid lines"
                 alt="Grid lines"
-                className="w-full"
+                className={clsx(
+                  "w-full transition-opacity duration-1000 ease-out delay-100",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
               />
               <img
                 src="imgsrc|3149:201|Grid lines"
                 alt="Grid lines"
-                className="w-full"
+                className={clsx(
+                  "w-full transition-opacity duration-1000 ease-out delay-200",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
               />
               <img
                 src="imgsrc|3149:201|Grid lines"
                 alt="Grid lines"
-                className="w-full"
+                className={clsx(
+                  "w-full transition-opacity duration-1000 ease-out delay-300",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
               />
               <img
                 src="imgsrc|3149:201|Grid lines"
                 alt="Grid lines"
-                className="w-full"
+                className={clsx(
+                  "w-full transition-opacity duration-1000 ease-out delay-400",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
               />
             </div>
             <div
-              className={clsx({
-                "top-[7px] absolute h-[247px] flex-col flex px-0.5 pb-[3px]": true,
-                "right-[10px]": yAxisType === "money",
-                "right-[28px]": yAxisType === "number",
-              })}
+              className={clsx(
+                "top-[7px] absolute h-[247px] flex-col flex px-0.5 pb-[3px]",
+                {
+                  "right-[10px]": yAxisType === "money",
+                  "right-[28px]": yAxisType === "number",
+                },
+                isMounted
+                  ? "opacity-100 transition-opacity duration-1000 ease-out"
+                  : "opacity-0"
+              )}
             >
               <img
                 src="imgsrc|3149:207|tremor/line"
                 alt="tremor/line"
-                className="w-full h-[218px] right-0.5 top-0 absolute"
+                className={clsx(
+                  "w-full h-[218px] right-0.5 top-0 absolute transition-transform duration-1000 ease-out",
+                  { "translate-x-0": isMounted, "translate-x-4": !isMounted }
+                )}
               />
               {(count === "2" ||
                 count === "3" ||
@@ -253,44 +351,140 @@ function TremorLineChart({
                 <img
                   src="imgsrc|3149:207|tremor/line"
                   alt="tremor/line"
-                  className="w-full h-[218px] right-0.5 top-0 absolute"
+                  className={clsx(
+                    "w-full h-[218px] right-0.5 top-0 absolute transition-transform duration-1000 ease-out delay-200",
+                    { "translate-x-0": isMounted, "translate-x-4": !isMounted }
+                  )}
                 />
               )}
               {(count === "3" || count === "4" || count === "5") && (
                 <img
                   src="imgsrc|3149:207|tremor/line"
                   alt="tremor/line"
-                  className="w-full h-[218px] right-0.5 top-0 absolute"
+                  className={clsx(
+                    "w-full h-[218px] right-0.5 top-0 absolute transition-transform duration-1000 ease-out delay-400",
+                    { "translate-x-0": isMounted, "translate-x-4": !isMounted }
+                  )}
                 />
               )}
               {(count === "4" || count === "5") && (
                 <img
                   src="imgsrc|3149:207|tremor/line"
                   alt="tremor/line"
-                  className="w-full h-[218px] right-0.5 top-0 absolute"
+                  className={clsx(
+                    "w-full h-[218px] right-0.5 top-0 absolute transition-transform duration-1000 ease-out delay-600",
+                    { "translate-x-0": isMounted, "translate-x-4": !isMounted }
+                  )}
                 />
               )}
               {count === "5" && (
                 <img
                   src="imgsrc|3149:207|tremor/line"
                   alt="tremor/line"
-                  className="w-full h-[218px] right-0.5 top-0 absolute"
+                  className={clsx(
+                    "w-full h-[218px] right-0.5 top-0 absolute transition-transform duration-1000 ease-out delay-800",
+                    { "translate-x-0": isMounted, "translate-x-4": !isMounted }
+                  )}
                 />
               )}
             </div>
             <div className="w-full flex justify-between items-start gap-1.5 text-xs leading-4 text-center text-sub-foreground">
-              <div className="w-[55px]">{xAxisTypeTexts_5[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_6[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_7[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_8[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_9[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_10[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_11[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_12[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_13[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_14[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_15[xAxisType]}</div>
-              <div className="w-[55px]">{xAxisTypeTexts_16[xAxisType]}</div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_5[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-100",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_6[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-200",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_7[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-300",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_8[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-400",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_9[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-500",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_10[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-600",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_11[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-700",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_12[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-800",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_13[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-900",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_14[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-1000",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_15[xAxisType]}
+              </div>
+              <div
+                className={clsx(
+                  "w-[55px] transition-opacity duration-700 ease-out delay-1100",
+                  { "opacity-100": isMounted, "opacity-0": !isMounted }
+                )}
+              >
+                {xAxisTypeTexts_16[xAxisType]}
+              </div>
             </div>
           </div>
         </div>
@@ -298,4 +492,5 @@ function TremorLineChart({
     </div>
   );
 }
+
 export default TremorLineChart;

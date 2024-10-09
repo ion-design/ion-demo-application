@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import Label from './Label';
 import Hint from './Hint';
 import { useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
 	required?: boolean;
@@ -34,9 +35,26 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 	) => {
 		const id = React.useId();
 		const [charCount, setCharCount] = useState(0);
+		const [isFocused, setIsFocused] = useState(false);
+		const textareaControls = useAnimation();
+
+		React.useEffect(() => {
+			if (error) {
+				textareaControls.start({
+					x: [0, -5, 5, -5, 5, 0],
+					transition: { duration: 0.4 },
+				});
+			}
+		}, [error, textareaControls]);
 
 		return (
-			<div className={className}>
+			<motion.div
+				initial={{ opacity: 0, y: 10 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.5, ease: 'easeOut' }}
+				className={className}
+				style={style}
+			>
 				{label && (
 					<Label
 						htmlFor={id}
@@ -49,10 +67,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 					</Label>
 				)}
 				<div className="relative">
-					<textarea
+					<motion.textarea
 						maxLength={props.maxLength}
 						id={id}
 						ref={ref}
+						onFocus={() => setIsFocused(true)}
+						onBlur={() => setIsFocused(false)}
 						onChange={(e) => {
 							if (onChange) {
 								onChange(e);
@@ -68,16 +88,21 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 							}
 						)}
 						{...props}
+						animate={isFocused ? { scale: 1.02, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' } : { scale: 1, boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.05)' }}
+						transition={{ type: 'spring', stiffness: 300, damping: 20 }}
 					/>
 					{showCount && (
-						<span
+						<motion.span
 							className={clsx('absolute bottom-3 right-4 text-xs font-normal text-sub-foreground', {
 								'text-weak-foreground': props.disabled,
 								'!text-danger': error,
 							})}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.3, ease: 'easeInOut' }}
 						>
 							{charCount} / {props.maxLength}
-						</span>
+						</motion.span>
 					)}
 				</div>
 				{hint && (
@@ -85,7 +110,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 						{hint}
 					</Hint>
 				)}
-			</div>
+			</motion.div>
 		);
 	}
 );

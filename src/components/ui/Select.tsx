@@ -5,6 +5,7 @@ import * as SelectPrimitive from '@radix-ui/react-select';
 import clsx from 'clsx';
 import { Check } from 'lucide-react';
 import * as React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import Hint from './Hint';
 import Label from './Label';
@@ -24,17 +25,29 @@ const SelectTrigger = React.forwardRef<
 	<SelectPrimitive.Trigger
 		ref={ref}
 		className={clsx(
-			'border-sub-stroke focus:border-stroke focus:primary-focus disabled:border-stroke-weak flex h-9 w-full items-center justify-between rounded-radius border bg-base py-2 pl-3 pr-2 text-sm placeholder:text-soft-foreground disabled:pointer-events-none disabled:bg-weak',
+			'border-sub-stroke focus:border-stroke focus:primary-focus disabled:border-stroke-weak flex h-9 w-full items-center justify-between rounded-radius border bg-base py-2 pl-3 pr-2 text-sm placeholder:text-soft-foreground disabled:pointer-events-none disabled:bg-weak transition-colors duration-300 ease-in-out',
 			className
 		)}
 		{...props}
 	>
-		<span className="flex items-center gap-3">
+		<motion.span
+			className="flex items-center gap-3"
+			initial={{ opacity: 0, x: -10 }}
+			animate={{ opacity: 1, x: 0 }}
+			transition={{ duration: 0.3, ease: 'easeOut' }}
+		>
 			{iconLeading} {children}
-		</span>
+		</motion.span>
 
 		<SelectPrimitive.Icon asChild>
-			<CaretDown className="h-4 w-4" />
+			<motion.div
+				initial={{ rotate: 0 }}
+				animate={{ rotate: 180 }}
+				transition={{ duration: 0.3, ease: 'easeOut' }}
+				className="h-4 w-4"
+			>
+				<CaretDown />
+			</motion.div>
 		</SelectPrimitive.Icon>
 	</SelectPrimitive.Trigger>
 ));
@@ -45,27 +58,37 @@ const SelectContent = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ className, children, position = 'popper', ...props }, ref) => (
 	<SelectPrimitive.Portal>
-		<SelectPrimitive.Content
-			ref={ref}
-			className={clsx(
-				'relative z-50 min-w-[8rem] overflow-hidden rounded-radius border bg-base text-foreground shadow-low data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-				position === 'popper' &&
-					'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-				className
-			)}
-			position={position}
-			{...props}
-		>
-			<SelectPrimitive.Viewport
-				className={clsx(
-					'p-2',
-					position === 'popper' &&
-						'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
-				)}
+		<AnimatePresence>
+			<SelectPrimitive.Content
+				ref={ref}
+				asChild
+				position={position}
+				{...props}
 			>
-				{children}
-			</SelectPrimitive.Viewport>
-		</SelectPrimitive.Content>
+				<motion.div
+					initial={{ opacity: 0, scale: 0.95, y: -10 }}
+					animate={{ opacity: 1, scale: 1, y: 0 }}
+					exit={{ opacity: 0, scale: 0.95, y: -10 }}
+					transition={{ duration: 0.2, ease: 'easeOut' }}
+					className={clsx(
+						'relative z-50 min-w-[8rem] overflow-hidden rounded-radius border bg-base text-foreground shadow-low',
+						position === 'popper' &&
+							'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+						className
+					)}
+				>
+					<SelectPrimitive.Viewport
+						className={clsx(
+							'p-2',
+							position === 'popper' &&
+								'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
+						)}
+					>
+						{children}
+					</SelectPrimitive.Viewport>
+				</motion.div>
+			</SelectPrimitive.Content>
+		</AnimatePresence>
 	</SelectPrimitive.Portal>
 ));
 SelectContent.displayName = SelectPrimitive.Content.displayName;
@@ -88,22 +111,45 @@ const SelectItem = React.forwardRef<
 	<SelectPrimitive.Item
 		ref={ref}
 		className={clsx(
-			'group relative flex w-full cursor-default select-none items-center gap-2 rounded-radius p-2 pr-8 text-sm font-semibold text-foreground outline-none focus:bg-weak data-[disabled]:pointer-events-none data-[disabled]:text-weak-foreground',
+			'group relative flex w-full cursor-default select-none items-center gap-2 rounded-radius p-2 pr-8 text-sm font-semibold text-foreground outline-none focus:bg-weak data-[disabled]:pointer-events-none data-[disabled]:text-weak-foreground transition-colors duration-200 ease-in-out',
 			className
 		)}
 		{...props}
 	>
-		<span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
+		<motion.span
+			className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center"
+			initial={{ opacity: 0, scale: 0.8 }}
+			animate={{ opacity: 1, scale: 1 }}
+			transition={{ duration: 0.2 }}
+		>
 			<SelectPrimitive.ItemIndicator>
-				<Check className="h-4 w-4 text-sub-foreground data-[disabled]:text-weak-foreground" />
+				<motion.div
+					initial={{ opacity: 0, scale: 0.5 }}
+					animate={{ opacity: 1, scale: 1 }}
+					exit={{ opacity: 0, scale: 0.5 }}
+					transition={{ duration: 0.2 }}
+				>
+					<Check className="h-4 w-4 text-sub-foreground data-[disabled]:text-weak-foreground" />
+				</motion.div>
 			</SelectPrimitive.ItemIndicator>
-		</span>
-		{iconLeading}
-		<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+		</motion.span>
+		<motion.div
+			className="flex items-center gap-2"
+			whileHover={{ x: 5 }}
+			transition={{ type: 'tween', duration: 0.2 }}
+		>
+			{iconLeading}
+			<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+		</motion.div>
 		{description && (
-			<p className="font-normal text-soft-foreground group-data-[disabled]:text-weak-foreground">
+			<motion.p
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.1, duration: 0.3 }}
+				className="font-normal text-soft-foreground group-data-[disabled]:text-weak-foreground"
+			>
 				{description}
-			</p>
+			</motion.p>
 		)}
 	</SelectPrimitive.Item>
 ));
@@ -113,11 +159,7 @@ const SelectSeparator = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Separator>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-	<SelectPrimitive.Separator
-		ref={ref}
-		className={clsx('bg-muted -mx-1 my-1 h-px', className)}
-		{...props}
-	/>
+	<SelectPrimitive.Separator ref={ref} className={clsx('bg-muted -mx-1 my-1 h-px', className)} {...props} />
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
@@ -151,9 +193,7 @@ const Select = React.forwardRef<
 		<div className="w-full">
 			<SelectBase {...props}>
 				{props.label && (
-					<Label required={required} disabled={props.disabled} error={error} className="mb-1">
-						{props.label}
-					</Label>
+					<Label required={required} disabled={props.disabled} error={error} className="mb-1" />
 				)}
 				<SelectTrigger
 					className={className}

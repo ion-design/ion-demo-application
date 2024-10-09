@@ -11,7 +11,10 @@ const NavigationMenu = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
 	<NavigationMenuPrimitive.Root
 		ref={ref}
-		className={clsx('relative z-10 flex w-full flex-1 [&>div]:w-full', className)}
+		className={clsx(
+			'relative z-10 flex w-full flex-1 [&>div]:w-full transition-all duration-300 ease-in-out',
+			className
+		)}
 		{...props}
 	>
 		{children}
@@ -25,14 +28,17 @@ const NavigationMenuList = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<NavigationMenuPrimitive.List
 		ref={ref}
-		className={clsx('group flex flex-1 list-none', className)}
+		className={clsx(
+			'group flex flex-1 list-none transition-opacity duration-500 ease-in-out',
+			className
+		)}
 		{...props}
 	/>
 ));
 NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 
 const navigationMenuLinkClassnames = cva(
-	'flex w-full cursor-default justify-between gap-2 rounded-radius border-transparent px-3 py-2 text-base font-medium no-underline outline-none transition-colors',
+	'flex w-full cursor-default justify-between gap-2 rounded-radius border-transparent px-3 py-2 text-base font-medium no-underline outline-none transition-colors transition-transform duration-300 ease-in-out transform hover:scale-105 focus:scale-105',
 	{
 		variants: {
 			type: {
@@ -68,6 +74,10 @@ const navigationMenuLinkClassnames = cva(
 				className: 'bg-base',
 			},
 		],
+		defaultVariants: {
+			type: 'default',
+			selected: false,
+		},
 	}
 );
 
@@ -120,7 +130,10 @@ const NavigationMenuItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<NavigationMenuPrimitive.Item
 		ref={ref}
-		className={clsx('w-full cursor-pointer', className)}
+		className={clsx(
+			'w-full cursor-pointer transition-transform duration-300 ease-in-out hover:translate-y-1',
+			className
+		)}
 		{...props}
 	/>
 ));

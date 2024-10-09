@@ -19,16 +19,48 @@ import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { Tab, Tabs, TabsList } from "@/components/ui/Tabs";
+import { motion } from "framer-motion";
+
 function DashboardExample() {
   const [inputValue, setInputValue] = useState("");
   function buyClickHandler(e: MouseEvent<HTMLButtonElement>) {
     alert("buyClickHandler fired");
   }
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        staggerChildren: 0.2,
+        when: "beforeChildren",
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
     <div className="w-[1200px] flex">
       <SideNavigation />
-      <div className="bg-white flex-1 h-full w-full flex flex-col items-center gap-5 p-10">
-        <div className="w-full flex justify-between items-center">
+      <motion.div
+        className="bg-white flex-1 h-full w-full flex flex-col items-center gap-5 p-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="w-full flex justify-between items-center"
+          variants={itemVariants}
+        >
           <div className="bg-white flex items-center gap-5">
             <div className="bg-gray-900 flex flex-col justify-center items-center p-2.5 rounded">
               <img
@@ -45,7 +77,13 @@ function DashboardExample() {
               </TabsList>
             </Tabs>
           </div>
-          <div className="flex justify-center items-start gap-5">
+          <motion.div
+            className="flex justify-center items-start gap-5"
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.1 }}
+          >
             <Input
               className="w-[250px]"
               placeholder="Search"
@@ -62,9 +100,14 @@ function DashboardExample() {
             >
               Buy
             </Button>
-          </div>
-        </div>
-        <div className="w-full flex items-start gap-5">
+          </motion.div>
+        </motion.div>
+        <motion.div
+          className="w-full flex items-start gap-5"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <TokenMetric
             badge={
               <Badge
@@ -93,13 +136,31 @@ function DashboardExample() {
             metric="$4.56"
             title="TVL"
           />
-        </div>
-        <div className="w-full flex flex-col gap-2">
-          <div className="text-lg font-semibold text-base-foreground">
+        </motion.div>
+        <motion.div
+          className="w-full flex flex-col gap-2"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div
+            className="text-lg font-semibold text-base-foreground"
+            variants={itemVariants}
+            transition={{ delay: 0.2 }}
+          >
             Overview
-          </div>
-          <div className="bg-gray-50 w-full flex flex-col items-center px-2 py-5 rounded-radius-sm border border-gray-300">
-            <div className="w-full flex justify-between items-center px-5">
+          </motion.div>
+          <motion.div
+            className="bg-gray-50 w-full flex flex-col items-center px-2 py-5 rounded-radius-sm border border-gray-300"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div
+              className="w-full flex justify-between items-center px-5"
+              variants={itemVariants}
+              transition={{ delay: 0.3 }}
+            >
               <div className="flex flex-col justify-center">
                 <div className="text-sm text-gray-400">TVL</div>
                 <div className="text-3xl font-medium text-base-foreground">
@@ -120,45 +181,53 @@ function DashboardExample() {
                   </TabsList>
                 </Tabs>
               </div>
-            </div>
-            <LineChart
-              valueFormatter={(number) =>
-                `$${Intl.NumberFormat().format(number).toString()}`
-              }
-              index={"number"}
-              data={[
-                {
-                  number: 1,
-                  Ether: 199,
-                  USDC: 184,
-                },
-                {
-                  number: 2,
-                  Ether: 228,
-                  USDC: 236,
-                },
-                {
-                  number: 3,
-                  Ether: 364,
-                  USDC: 358,
-                },
-                {
-                  number: 4,
-                  Ether: 452,
-                  USDC: 408,
-                },
-                {
-                  number: 5,
-                  Ether: 505,
-                  USDC: 575,
-                },
-              ]}
-              categories={["Ether", "USDC"]}
-              yAxisWidth={48}
-            />
-          </div>
-        </div>
-      </div>
+            </motion.div>
+            <motion.div
+              variants={itemVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{ delay: 0.4 }}
+              className="w-full"
+            >
+              <LineChart
+                valueFormatter={(number) =>
+                  `$${Intl.NumberFormat().format(number).toString()}`
+                }
+                index={"number"}
+                data={[
+                  {
+                    number: 1,
+                    Ether: 199,
+                    USDC: 184,
+                  },
+                  {
+                    number: 2,
+                    Ether: 228,
+                    USDC: 236,
+                  },
+                  {
+                    number: 3,
+                    Ether: 364,
+                    USDC: 358,
+                  },
+                  {
+                    number: 4,
+                    Ether: 452,
+                    USDC: 408,
+                  },
+                  {
+                    number: 5,
+                    Ether: 505,
+                    USDC: 575,
+                  },
+                ]}
+                categories={["Ether", "USDC"]}
+                yAxisWidth={48}
+              />
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

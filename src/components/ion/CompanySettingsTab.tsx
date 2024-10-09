@@ -8,6 +8,8 @@ import Select from '@/components/ui/Select';
 import { Phone } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import clsx from 'clsx';
+import { motion, AnimatePresence } from 'framer-motion';
+
 type CompanySettingsTabProps = {
 	className?: string;
 };
@@ -16,8 +18,13 @@ function CompanySettingsTab({ className = '' }: CompanySettingsTabProps) {
 	const [legalEntityName, setLegalEntityName] = useState('');
 	const [dbaName, setDbaName] = useState('');
 	const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
+	const [showSuccess, setShowSuccess] = useState(false);
+
 	function applyChangesClickHandler(e: MouseEvent<HTMLButtonElement>) {
-		alert('applyChangesClickHandler fired');
+		setShowSuccess(true);
+		setTimeout(() => {
+			setShowSuccess(false);
+		}, 3000);
 	}
 
 	const options = [
@@ -27,7 +34,12 @@ function CompanySettingsTab({ className = '' }: CompanySettingsTabProps) {
 	];
 
 	return (
-		<div className={clsx('w-full flex-col flex items-center gap-y-4 h-fit', className)}>
+		<motion.div
+			className={clsx('w-full flex-col flex items-center gap-y-4 h-fit', className)}
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5, ease: 'easeOut' }}
+		>
 			<Input
 				placeholder="ion design"
 				iconLeading={<Buildings size={16} className="text-foreground" weight={'regular'} />}
@@ -61,7 +73,20 @@ function CompanySettingsTab({ className = '' }: CompanySettingsTabProps) {
 					Apply Changes
 				</Button>
 			</div>
-		</div>
+			<AnimatePresence>
+				{showSuccess && (
+					<motion.div
+						initial={{ opacity: 0, scale: 0.95 }}
+						animate={{ opacity: 1, scale: 1 }}
+						exit={{ opacity: 0, scale: 0.95 }}
+						transition={{ duration: 0.3 }}
+						className="mt-4 w-full max-w-sm px-4 py-3 bg-green-100 text-green-800 rounded-lg shadow-lg text-center"
+					>
+						Changes applied successfully!
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</motion.div>
 	);
 }
 export default CompanySettingsTab;

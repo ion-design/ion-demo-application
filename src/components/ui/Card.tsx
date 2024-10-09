@@ -1,3 +1,4 @@
+// src/components/ui/Card.tsx
 // ion/Card: Generated with Ion on 2/4/2024, 7:46:43 PM
 import * as React from 'react';
 
@@ -8,7 +9,7 @@ const BaseCard = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 		<div
 			ref={ref}
 			className={clsx(
-				'flex h-full w-fit flex-col gap-2 rounded-radius-md p-4 text-foreground',
+				'flex h-full w-fit flex-col gap-2 rounded-radius-md p-4 text-foreground transition transform ease-in-out duration-300 hover:shadow-lg hover:scale-105',
 				className
 			)}
 			{...props}
@@ -19,14 +20,30 @@ BaseCard.displayName = 'Card';
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
 	({ className, ...props }, ref) => (
-		<div ref={ref} className={clsx('flex items-center gap-5 pb-1', className)} {...props} />
+		<div
+			ref={ref}
+			className={clsx(
+				'flex items-center gap-5 pb-1 opacity-0 transform translate-y-2 transition ease-in-out duration-500',
+				'card-header-enter-active:opacity-100 card-header-enter-active:translate-y-0',
+				className
+			)}
+			{...props}
+		/>
 	)
 );
 CardHeader.displayName = 'CardHeader';
 
-const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
 	({ className, ...props }, ref) => (
-		<h3 ref={ref} className={clsx('text-xl font-semibold text-foreground', className)} {...props} />
+		<h3
+			ref={ref}
+			className={clsx(
+				'text-xl font-semibold text-foreground transition opacity-0 transform translate-y-2 duration-500',
+				'card-title-enter-active:opacity-100 card-title-enter-active:translate-y-0',
+				className
+			)}
+			{...props}
+		/>
 	)
 );
 CardTitle.displayName = 'CardTitle';
@@ -35,12 +52,30 @@ const CardDescription = React.forwardRef<
 	HTMLParagraphElement,
 	React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-	<p ref={ref} className={clsx('text-sm text-sub-foreground', className)} {...props} />
+	<p
+		ref={ref}
+		className={clsx(
+			'text-sm text-sub-foreground transition opacity-0 transform translate-y-2 duration-500',
+			'card-description-enter-active:opacity-100 card-description-enter-active:translate-y-0',
+			className
+		)}
+		{...props}
+	/>
 ));
 CardDescription.displayName = 'CardDescription';
 
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-	({ className, ...props }, ref) => <div ref={ref} className={clsx('pt-0', className)} {...props} />
+	({ className, ...props }, ref) => (
+		<div
+			ref={ref}
+			className={clsx(
+				'pt-0 transition opacity-0 transform translate-y-2 duration-500',
+				'card-content-enter-active:opacity-100 card-content-enter-active:translate-y-0',
+				className
+			)}
+			{...props}
+		/>
+	)
 );
 CardContent.displayName = 'CardContent';
 
@@ -48,7 +83,11 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 	({ className, ...props }, ref) => (
 		<div
 			ref={ref}
-			className={clsx('mt-auto flex items-center space-x-2 pt-3', className)}
+			className={clsx(
+				'mt-auto flex items-center space-x-2 pt-3 transition opacity-0 transform translate-y-2 duration-500',
+				'card-footer-enter-active:opacity-100 card-footer-enter-active:translate-y-0',
+				className
+			)}
 			{...props}
 		/>
 	)
@@ -76,11 +115,15 @@ export default function Card({
 }: CardProps) {
 	return (
 		<BaseCard
-			className={clsx(className, {
-				'border border-sub-stroke': type === 'outline',
-				'bg-weak': type === 'filled',
-				'shadow-low': type === 'elevated',
-			})}
+			className={clsx(
+				className,
+				{
+					'border border-sub-stroke': type === 'outline',
+					'bg-weak': type === 'filled',
+					'shadow-low': type === 'elevated',
+				},
+				'animate-fade-in'
+			)}
 		>
 			{(title || subtitle) && (
 				<CardHeader>

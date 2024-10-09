@@ -9,6 +9,8 @@ import Input from '@/components/ui/Input';
 import Textarea from '@/components/ui/Textarea';
 import Button from '@/components/ui/Button';
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
+
 type ProfileSettingsTabProps = {
 	className?: string;
 };
@@ -18,11 +20,23 @@ function ProfileSettingsTab({ className = '' }: ProfileSettingsTabProps) {
 	const [emailAddress, setEmailAddress] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const [address, setAddress] = useState('');
+	const [showSuccess, setShowSuccess] = useState(false);
+
 	function applyChangesClickHandler(e: MouseEvent<HTMLButtonElement>) {
-		alert('applyChangesClickHandler fired');
+		// Instead of alert, show a success message with animation
+		setShowSuccess(true);
+		setTimeout(() => {
+			setShowSuccess(false);
+		}, 3000);
 	}
+
 	return (
-		<div className={clsx('w-[450px] flex-col flex items-center gap-y-4 h-fit', className)}>
+		<motion.div
+			className={clsx('w-[450px] flex-col flex items-center gap-y-4 h-fit', className)}
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.6, ease: 'easeOut' }}
+		>
 			<div className="w-full flex items-center">
 				<Avatar
 					subtitle="Enter your contact details for communication."
@@ -53,7 +67,7 @@ function ProfileSettingsTab({ className = '' }: ProfileSettingsTabProps) {
 				className="w-full"
 			/>
 			<Input
-				placeholder="samraaj@ion.design"
+				placeholder="123-456-7890"
 				iconLeading={<Phone size={16} className="text-foreground" weight={'regular'} />}
 				required={true}
 				label="Phone Number"
@@ -62,7 +76,7 @@ function ProfileSettingsTab({ className = '' }: ProfileSettingsTabProps) {
 				className="w-full"
 			/>
 			<Textarea
-				placeholder="301 main st"
+				placeholder="301 Main St, Springfield"
 				required={true}
 				label="Address"
 				showHintIcon={true}
@@ -71,12 +85,23 @@ function ProfileSettingsTab({ className = '' }: ProfileSettingsTabProps) {
 				onChange={(e) => setAddress(e.target.value)}
 				className="w-full"
 			/>
-			<div className="w-full flex justify-end items-center gap-x-5">
+			<div className="w-full flex justify-end items-center gap-x-5 relative">
 				<Button emphasis="high" color="primary" size="md" onClick={applyChangesClickHandler}>
 					Apply Changes
 				</Button>
+				{showSuccess && (
+					<motion.div
+						initial={{ opacity: 0, y: -10 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -10 }}
+						transition={{ duration: 0.5 }}
+						className="absolute right-0 mt-2 px-4 py-2 bg-green-500 text-white rounded-md shadow-lg"
+					>
+						Changes Applied Successfully!
+					</motion.div>
+				)}
 			</div>
-		</div>
+		</motion.div>
 	);
 }
 export default ProfileSettingsTab;

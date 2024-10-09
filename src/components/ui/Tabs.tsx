@@ -24,34 +24,34 @@ const TabsList = React.forwardRef<
 			className={clsx(
 				'relative flex w-fit items-start',
 				{
-					'gap-1 rounded-radius-md bg-soft p-1': type === 'filled',
+					'gap-1 rounded-radius-md bg-soft p-1 transition-colors duration-300 ease-in-out': type === 'filled',
 				},
 				className
 			)}
 			{...props}
 		>
 			{children}
-			{type === 'simple' && <div className={'absolute bottom-0 z-0 h-px w-full bg-soft-stroke'} />}
+			{type === 'simple' && <div className={'absolute bottom-0 z-0 h-px w-full bg-soft-stroke transition-all duration-300 ease-in-out'} />}
 		</TabsPrimitive.List>
 	</TabTypeContext.Provider>
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
 const tabClassnames = cva(
-	'focus-visible:secondary-focus gap-2 inline-flex items-center justify-center whitespace-nowrap text-sm data-[state=active]:font-semibold font-medium text-soft-foreground transition-all disabled:pointer-events-none ',
+	'focus-visible:secondary-focus gap-2 inline-flex items-center justify-center whitespace-nowrap text-sm data-[state=active]:font-semibold font-medium text-soft-foreground transition-all duration-300 ease-in-out disabled:pointer-events-none ',
 	{
 		variants: {
 			type: {
 				filled: [
 					'rounded-radius',
-					'hover:bg-weak',
+					'hover:bg-weak transition-colors duration-300 ease-in-out',
 					'data-[state=active]:bg-base data-[state=active]:text-foreground data-[state=active]:shadow-low',
 					'disabled:text-weak-foreground ',
 				],
 				simple: [
 					'border-b-2 border-transparent',
-					'transition-all data-[state=active]:z-[1]',
-					'hover:text-foreground',
+					'transition-all duration-300 ease-in-out data-[state=active]:z-[1]',
+					'hover:text-foreground transition-colors duration-300 ease-in-out',
 					'disabled:text-weak-foreground',
 					'data-[state=active]:border-primary data-[state=active]:text-primary',
 				],
@@ -87,12 +87,12 @@ const Tab = React.forwardRef<
 	return (
 		<TabsPrimitive.Trigger
 			ref={ref}
-			className={clsx(tabClassnames({ type, icon: !children }), className)}
+			className={clsx(tabClassnames({ type, icon: !!(iconLeading || iconTrailing) }), className)}
 			{...props}
 		>
-			{iconLeading}
+			{iconLeading && <span className="transition-transform duration-300 ease-in-out group-hover:translate-y-0.5">{iconLeading}</span>}
 			{children}
-			{iconTrailing}
+			{iconTrailing && <span className="transition-transform duration-300 ease-in-out group-hover:-translate-y-0.5">{iconTrailing}</span>}
 		</TabsPrimitive.Trigger>
 	);
 });
@@ -104,7 +104,10 @@ const TabsContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<TabsPrimitive.Content
 		ref={ref}
-		className={clsx('focus-visible:secondary-focus mt-2', className)}
+		className={clsx(
+			'focus-visible:secondary-focus mt-2 opacity-0 translate-y-4 transition-opacity duration-500 ease-out transform data-[state=active]:opacity-100 data-[state=active]:translate-y-0',
+			className
+		)}
 		{...props}
 	/>
 ));

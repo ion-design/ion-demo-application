@@ -1,8 +1,8 @@
 'use client';
-// ion/SideNavigation/default: Generated with Ion on 2/4/2024, 6:02:24 PM
-// Figma Link: https://www.figma.com/file/LncZWxVTpD4svqEUVk63pC?node-id=33:7507
+// ion/SideNavigation: Enhanced with Animations
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 import {
 	Bank,
@@ -54,6 +54,22 @@ const themeOptions = [
 	},
 ];
 
+const listVariants = {
+	hidden: { opacity: 0, y: 10 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			staggerChildren: 0.05,
+		},
+	},
+};
+
+const itemVariants = {
+	hidden: { opacity: 0, y: 20 },
+	visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
+
 function SideNavigation() {
 	const [selected, setSelected] = useState('light');
 
@@ -75,7 +91,12 @@ function SideNavigation() {
 				<SidenavHeader />
 				<NavigationMenu>
 					<NavigationMenuList className="flex w-full flex-col items-start gap-1">
-						<div className="flex w-full items-start px-3 pb-5">
+						<motion.div
+							initial="hidden"
+							animate="visible"
+							variants={listVariants}
+							className="flex w-full items-start px-3 pb-5"
+						>
 							<Select
 								value={selected}
 								onValueChange={onValueChange}
@@ -84,77 +105,95 @@ function SideNavigation() {
 								options={themeOptions}
 								iconLeading={themeIcon}
 							/>
-						</div>
-						<Link href={'/'} legacyBehavior passHref>
-							<NavigationMenuItem className={'px-3'}>
-								<NavigationMenuLink
-									selected={pathname === '/'}
-									iconLeading={<GridFour size={16} weight={'fill'} />}
-									extra={
-										<Badge emphasis="medium" color="red" size="sm" type="number">
-											2
-										</Badge>
-									}
-									className="w-full"
-								>
-									Dashboard
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-						</Link>
-						<Link href={'/banking'} legacyBehavior passHref>
-							<NavigationMenuItem className={'px-3'}>
-								<NavigationMenuLink
-									selected={pathname === '/banking'}
-									iconLeading={<Bank size={16} weight={'fill'} />}
-									className="w-full"
-								>
-									Banking
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-						</Link>
-						<Link href={'/employees'} legacyBehavior passHref>
-							<NavigationMenuItem className={'px-3'}>
-								<NavigationMenuLink
-									selected={pathname === '/employees'}
-									iconLeading={<UsersFour size={16} weight={'fill'} />}
-									className="w-full"
-								>
-									Employees
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-						</Link>
-						<Link href={'/integrations'} legacyBehavior passHref>
-							<NavigationMenuItem className={'px-3'}>
-								<NavigationMenuLink
-									selected={pathname === '/integrations'}
-									iconLeading={<SlidersHorizontal size={16} weight={'fill'} />}
-									className="w-full"
-								>
-									Integrations
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-						</Link>
-						<Link href={'/settings'} legacyBehavior passHref>
-							<NavigationMenuItem className={'px-3'}>
-								<NavigationMenuLink
-									selected={pathname === '/settings'}
-									iconLeading={<Gear size={16} weight={'fill'} />}
-									className="w-full"
-								>
-									Settings
-								</NavigationMenuLink>
-							</NavigationMenuItem>
-						</Link>
+						</motion.div>
+						<motion.ul variants={listVariants} initial="hidden" animate="visible" className="w-full">
+							<Link href={'/'} legacyBehavior passHref>
+								<motion.li variants={itemVariants}>
+									<NavigationMenuItem className={'px-3'}>
+										<NavigationMenuLink
+											selected={pathname === '/'}
+											iconLeading={<GridFour size={16} weight={'fill'} />}
+											extra={
+												<Badge emphasis="medium" color="red" size="sm" type="number">
+													2
+												</Badge>
+											}
+											className="w-full"
+										>
+											Dashboard
+										</NavigationMenuLink>
+									</NavigationMenuItem>
+								</motion.li>
+							</Link>
+							<Link href={'/banking'} legacyBehavior passHref>
+								<motion.li variants={itemVariants}>
+									<NavigationMenuItem className={'px-3'}>
+										<NavigationMenuLink
+											selected={pathname === '/banking'}
+											iconLeading={<Bank size={16} weight={'fill'} />}
+											className="w-full"
+										>
+											Banking
+										</NavigationMenuLink>
+									</NavigationMenuItem>
+								</motion.li>
+							</Link>
+							<Link href={'/employees'} legacyBehavior passHref>
+								<motion.li variants={itemVariants}>
+									<NavigationMenuItem className={'px-3'}>
+										<NavigationMenuLink
+											selected={pathname === '/employees'}
+											iconLeading={<UsersFour size={16} weight={'fill'} />}
+											className="w-full"
+										>
+											Employees
+										</NavigationMenuLink>
+									</NavigationMenuItem>
+								</motion.li>
+							</Link>
+							<Link href={'/integrations'} legacyBehavior passHref>
+								<motion.li variants={itemVariants}>
+									<NavigationMenuItem className={'px-3'}>
+										<NavigationMenuLink
+											selected={pathname === '/integrations'}
+											iconLeading={<SlidersHorizontal size={16} weight={'fill'} />}
+											className="w-full"
+										>
+											Integrations
+										</NavigationMenuLink>
+									</NavigationMenuItem>
+								</motion.li>
+							</Link>
+							<Link href={'/settings'} legacyBehavior passHref>
+								<motion.li variants={itemVariants}>
+									<NavigationMenuItem className={'px-3'}>
+										<NavigationMenuLink
+											selected={pathname === '/settings'}
+											iconLeading={<Gear size={16} weight={'fill'} />}
+											className="w-full"
+										>
+											Settings
+										</NavigationMenuLink>
+									</NavigationMenuItem>
+								</motion.li>
+							</Link>
+						</motion.ul>
 					</NavigationMenuList>
 				</NavigationMenu>
 				<SidenavFooter
 					content={
-						<Avatar
-							subtitle="Product Designer"
-							title="Samraaj"
-							size="md"
-							src="/images/profile-card/headshot-1.png"
-						/>
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.5, ease: 'easeOut' }}
+						>
+							<Avatar
+								subtitle="Product Designer"
+								title="Samraaj"
+								size="md"
+								src="/images/profile-card/headshot-1.png"
+							/>
+						</motion.div>
 					}
 					collapsed={false}
 				/>

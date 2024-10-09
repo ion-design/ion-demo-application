@@ -5,7 +5,15 @@ import clsx from 'clsx';
 import * as React from 'react';
 
 const classNames = cva(
-	['flex', 'items-center', 'justify-center', 'rounded-radius', 'disabled:pointer-events-none'],
+	[
+		'flex',
+		'items-center',
+		'justify-center',
+		'rounded-radius',
+		'disabled:pointer-events-none',
+		'transform',
+		'transition-transform'
+	],
 	{
 		variants: {
 			emphasis: {
@@ -193,7 +201,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 						'h-8 w-8': (iconLeading || iconTrailing) && !children && size === 'md',
 						'h-10 w-10': (iconLeading || iconTrailing) && !children && size === 'lg',
 					},
-					'transition-shadows transition-colors',
+					'transition-shadows transition-colors transition-transform hover:scale-105 focus:scale-105',
 					className
 				)}
 				ref={ref}

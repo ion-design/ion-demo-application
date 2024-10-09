@@ -6,6 +6,11 @@ import Label from './Label';
 
 import clsx from 'clsx';
 import { DividerHorizontalIcon } from '@radix-ui/react-icons';
+import { motion } from 'framer-motion';
+
+const MotionCheckboxRoot = motion(CheckboxPrimitive.Root);
+const MotionCheck = motion(Check);
+const MotionDivider = motion(DividerHorizontalIcon);
 
 const Checkbox = React.forwardRef<
 	React.ElementRef<typeof CheckboxPrimitive.Root>,
@@ -18,7 +23,7 @@ const Checkbox = React.forwardRef<
 	const id = React.useId();
 	return (
 		<span className="flex items-center gap-2">
-			<CheckboxPrimitive.Root
+			<MotionCheckboxRoot
 				id={id}
 				ref={ref}
 				className={clsx(
@@ -29,18 +34,42 @@ const Checkbox = React.forwardRef<
 					'group',
 					className
 				)}
+				whileHover={{ scale: 1.05 }}
+				whileTap={{ scale: 0.95 }}
+				transition={{ type: 'spring', stiffness: 300, damping: 20 }}
 				{...props}
 			>
 				<CheckboxPrimitive.Indicator
+					asChild
 					className={clsx('flex items-center justify-center text-current')}
 				>
-					<Check
-						size={15}
-						className={'z-10 hidden transition-none group-data-[state=checked]:block'}
-					/>
-					<DividerHorizontalIcon className={'hidden group-data-[state=indeterminate]:block'} />
+					<motion.div
+						initial={{ scale: 0, opacity: 0 }}
+						animate={{
+							scale: props.checked || props.indeterminate ? 1 : 0,
+							opacity: props.checked || props.indeterminate ? 1 : 0,
+						}}
+						transition={{ duration: 0.2, ease: 'easeOut' }}
+					>
+						{props.indeterminate ? (
+							<MotionDivider
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.2 }}
+								className={'w-3 h-0.5 bg-current'}
+							/>
+						) : (
+							<MotionCheck
+								initial={{ pathLength: 0 }}
+								animate={{ pathLength: 1 }}
+								transition={{ duration: 0.2, ease: 'easeOut' }}
+								size={15}
+								className={'z-10'}
+							/>
+						)}
+					</motion.div>
 				</CheckboxPrimitive.Indicator>
-			</CheckboxPrimitive.Root>
+			</MotionCheckboxRoot>
 			{label && (
 				<Label
 					htmlFor={id}

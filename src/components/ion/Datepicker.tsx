@@ -1,9 +1,10 @@
 "use client";
-// ion/DatePicker: Generated with Ion on 6/19/2024, 10:30:33 PM
+// ion/DatePicker: Enhanced with subtle animations for a luxury feel
 import clsx from "clsx";
 import React, { useEffect, useRef } from "react";
 import { type UseInputOptions, useInput } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
+import { motion } from "framer-motion";
 
 import { Calendar } from "./Calendar";
 import Hint from "@/components/ui/Hint";
@@ -94,7 +95,12 @@ function Datepicker({
   }, [dayPickerProps.selected]);
 
   return (
-    <div className={className}>
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
       {label && (
         <Label
           id={`${id}__label`}
@@ -117,7 +123,7 @@ function Datepicker({
         }}
       >
         <PopoverTrigger asChild>
-          <span
+          <motion.span
             className={twMerge(
               clsx(
                 inputContainerClasses({
@@ -128,8 +134,18 @@ function Datepicker({
                 inputFocused && "primary-focus"
               )
             )}
+            whileFocus={{ scale: 1.02 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            {iconLeading}
+            {iconLeading && (
+              <motion.span
+                className="mr-2"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {iconLeading}
+              </motion.span>
+            )}
             <input
               id={id}
               aria-required={required}
@@ -142,7 +158,7 @@ function Datepicker({
                     : "Choose date"
                   : undefined
               }
-              className={inputClassNames}
+              className={twMerge(inputClassNames, props.inputClassName)}
               ref={inputRef}
               onChange={(e) => {
                 inputProps.onChange?.(e);
@@ -162,8 +178,16 @@ function Datepicker({
               disabled={props.disabled}
               {...inputProps}
             />
-            {iconTrailing}
-          </span>
+            {iconTrailing && (
+              <motion.span
+                className="ml-2"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {iconTrailing}
+              </motion.span>
+            )}
+          </motion.span>
         </PopoverTrigger>
         <PopoverContent
           className="w-auto px-5 py-8 border-outline-sub"
@@ -196,7 +220,7 @@ function Datepicker({
           {hint}
         </Hint>
       )}
-    </div>
+    </motion.div>
   );
 }
 
